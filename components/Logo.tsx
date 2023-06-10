@@ -5,7 +5,7 @@ type Props = {};
 
 const Logo = (props: Props) => {
   return (
-    <div className="text-mono mb-0 mt-4">
+    <div className="text-mono mb-0 mt-4 mb-10">
       <label className=" font-mono text-4xl font-bold">
         <Link href="/">
           <Image

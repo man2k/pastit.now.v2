@@ -25,3 +25,7 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+.monaco-editor {
+  @apply w-full h-full; /* Example Tailwind CSS utility classes */
+  /* Add additional Tailwind CSS utility classes as needed */
+}
