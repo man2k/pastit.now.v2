@@ -13,10 +13,10 @@ const TextField = (props: Props) => {
   // ];
 
   const [language, setLanguage] = useState("plaintext");
-  const [lineNumbers, setlineNumbers] = useState("on");
+  const [lineNumbers, setlineNumbers] = useState<string>("on");
   const [minimap, setMinimap] = useState(false);
 
-  const paste = useRef(null);
+  const paste = useRef<any>(null);
 
   const handleLineNumbers = () => {
     if (lineNumbers === "on") {
