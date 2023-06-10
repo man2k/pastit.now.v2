@@ -1,55 +1,115 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Editor, { DiffEditor, useMonaco, loader } from "@monaco-editor/react";
+import languages from "../assets/languages.json";
 
 type Props = {};
 
 const TextField = (props: Props) => {
+  // const languages = [
+  //   { value: "plaintext", name: "Plaintext" },
+  //   { value: "javascript", name: "Javascript" },
+  //   { value: "rust", name: "Rust" },
+  // ];
+
   const [language, setLanguage] = useState("plaintext");
-  const paste = useRef("");
-  const handleInputChange = (e) => {
-    paste.current = e;
-    // console.log(paste.current.getvalue);
+  const [lineNumbers, setlineNumbers] = useState("on");
+  const [minimap, setMinimap] = useState(false);
+
+  const paste = useRef(null);
+
+  const handleLineNumbers = () => {
+    if (lineNumbers === "on") {
+      setlineNumbers("off");
+    } else {
+      setlineNumbers("on");
+    }
   };
-  //   function showValue() {
-  //     console.log(paste.current.getValue());
-  //   }
-  const languages = [
-    { value: "plaintext", name: "Plaintext" },
-    { value: "javascript", name: "Javascript" },
-    { value: "rust", name: "Rust" },
-  ];
+
+  const handleInputChange = (e: object) => {
+    paste.current = e;
+    // console.log(paste.current.getvalue());
+  };
+
+  const toggleMinimap = () => {
+    console.log("minimap toggle");
+    setMinimap(!minimap);
+  };
+
+  // const showValue = () => {
+  //   console.log(paste.current.getValue());
+
+  // };
+
   return (
-    <div className="w-full border-2 px-5">
-      {/* <button onClick={showValue}>Show value</button> */}
-      <select
-        name={language}
-        id="Language"
-        onChange={(e) => {
-          //   console.log(e.target.value);
-          setLanguage(e.target.value);
-        }}
-      >
-        {languages.map((e, key) => {
-          return (
-            <option value={e.value} key={key}>
-              {e.name}
-            </option>
-          );
-        })}
-      </select>
+    <div className="flex-col w-full p-5 px-12">
+      <div className="flex border-1 mb-3">
+        {/* <button onClick={showValue}>Show value</button> */}
+        <select
+          name={language}
+          id="Language"
+          onChange={(e) => {
+            //   console.log(e.target.value);
+            setLanguage(e.target.value);
+          }}
+          className="flex bg-slate-800 rounded-xl text-white text-center"
+        >
+          {languages.map((e, key) => {
+            return (
+              <option value={e.value} key={key} className="m-0 w-auto">
+                {e.name}
+              </option>
+            );
+          })}
+        </select>
+        <div className="flex-col bg-slate-800 ml-6 rounded-xl text-center">
+          <label className="p-3 text-white">Minimap</label>
+          <br />
+          <input
+            type="checkbox"
+            className="rounded-2xl"
+            onChange={toggleMinimap}
+          />
+        </div>
+        <div className="flex-col bg-slate-800 ml-6 rounded-xl text-center">
+          <label className="text-white rounded-xl p-3">Line Numbers</label>
+          <br />
+          <input type="checkbox" defaultChecked onChange={handleLineNumbers} />
+        </div>
+      </div>
       <Editor
         height="50vh"
         width="auto"
         defaultLanguage="plaintext"
+        language={language}
         defaultValue=""
-        theme="vs-dark"
+        theme="hc-black"
         onMount={handleInputChange}
         options={{
-          wordWrap: "on",
-          wrappingIndent: "indent",
           readOnly: false,
-          minimap: { enabled: false },
+          wordWrap: "on",
+          wrappingIndent: "none",
+          autoIndent: "advanced",
+          fontFamily: "Inconsolata, Consolas, 'Courier New', monospace",
+          fontSize: 17,
+          minimap: {
+            enabled: minimap,
+          },
+          lineNumbers: lineNumbers,
+          lineDecorationsWidth: 10,
+          glyphMargin: false,
+          roundedSelection: true,
+          occurrencesHighlight: true,
+          folding: true,
+          renderWhitespace: "selection",
+          scrollBeyondLastLine: false,
+          smoothScrolling: true,
+          links: true,
+          codeLens: true,
+          scrollbar: {
+            vertical: "auto",
+            horizontal: "auto",
+          },
         }}
       />
     </div>
