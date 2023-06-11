@@ -2,18 +2,12 @@
 import { useEffect, useRef, useState } from "react";
 import Editor, { DiffEditor, useMonaco, loader } from "@monaco-editor/react";
 import languages from "../assets/languages.json";
-
+// import type { LineNumbersType } from "monaco-editor/esm/vs/editor/editor.api";
 type Props = {};
 
 const TextField = (props: Props) => {
-  // const languages = [
-  //   { value: "plaintext", name: "Plaintext" },
-  //   { value: "javascript", name: "Javascript" },
-  //   { value: "rust", name: "Rust" },
-  // ];
-
   const [language, setLanguage] = useState("plaintext");
-  const [lineNumbers, setlineNumbers] = useState<string>("on");
+  const [lineNumbers, setlineNumbers] = useState<any>("on");
   const [minimap, setMinimap] = useState(false);
 
   const paste = useRef<any>(null);
